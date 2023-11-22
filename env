@@ -1,0 +1,4 @@
+API_URL = /api/v1
+secret = Certified
+CONNECTION_STRING = mongodb+srv://AdminJason:MFzc54WQYhVX8xmL@cluster0.gy7kge0.mongodb.net/?retryWrites=true&w=majority
+PORT = 3000
