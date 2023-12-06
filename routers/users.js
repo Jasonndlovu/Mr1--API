@@ -42,35 +42,42 @@ router.get(`/:id`, async (req, res) =>{
     res.send(user);
 })
 
-//add user
-router.post(`/`, uploadOptions.single('image'),async (req, res)=>{ 
-     const file = req.file;
-    //  if (!file) {file = "Nofile";}
-    if (!file) return res.status(400).send('No image in the request');
-console.log(file)
-    const fileName = file.filename;
-    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;   
-        let user = new User({
-            username: req.body.username,
-            name: req.body.name,
-            surname: req.body.surname,
-            email: req.body.email,
-            passwordHash: bcrypt.hashSync(req.body.password, 10),
-            phone: req.body.phone,
-            membership: req.body.membership,
-            lessons: req.body.lessons,
-            image:`${basePath}${fileName}`, //"http://localhost:3000/public/upload/image-2323232"
-            // zip: req.body.zip,
-            // country: req.body.country,
-            isAdmin: req.body.isAdmin,
-        })
-        user = await user.save();
-        if(!user){res.status(500).send('The user cannot be created')}
-        res.send(user);
-    
-        
-        
-    })
+// add user
+// add user
+router.post(`/`, uploadOptions.single('image'), async (req, res) => {
+    const file = req.file;
+    let fileName = null;
+  
+    // Check if an image is present in the request
+    if (file) {
+      fileName = file.filename;
+    }
+  
+    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+  
+    let user = new User({
+      username: req.body.username,
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      passwordHash: bcrypt.hashSync(req.body.password, 10),
+      phone: req.body.phone,
+      membership: req.body.membership,
+      lessons: req.body.lessons,
+      image: fileName ? `${basePath}${fileName}` : null,
+      // zip: req.body.zip,
+      // country: req.body.country,
+      isAdmin: req.body.isAdmin,
+    });
+  
+    user = await user.save();
+    if (!user) {
+      res.status(500).send('The user cannot be created');
+    }
+    res.send(user);
+  });
+  
+  
 
 //edit item
 // PUT method
