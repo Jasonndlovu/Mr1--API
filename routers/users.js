@@ -43,39 +43,55 @@ router.get(`/:id`, async (req, res) =>{
 })
 
 // add user
-// add user
+/// add user
 router.post(`/`, uploadOptions.single('image'), async (req, res) => {
-    const file = req.file;
-    let fileName = null;
-  
-    // Check if an image is present in the request
-    if (file) {
-      fileName = file.filename;
+    try {
+        // Check if a user with the same username, email, or phone number already exists
+        const existingUser = await User.findOne({
+            $or: [
+                { username: req.body.username },
+                { email: req.body.email },
+                { phone: req.body.phone }
+            ]
+        });
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'User with the same username, email, or phone number already exists.' });
+        }
+
+        const file = req.file;
+        let fileName = null;
+
+        // Check if an image is present in the request
+        if (file) {
+            fileName = file.filename;
+        }
+
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+
+        let user = new User({
+            username: req.body.username,
+            name: req.body.name,
+            surname: req.body.surname,
+            email: req.body.email,
+            passwordHash: bcrypt.hashSync(req.body.password, 10),
+            phone: req.body.phone,
+            membership: req.body.membership,
+            lessons: req.body.lessons,
+            image: fileName ? `${basePath}${fileName}` : null,
+            isAdmin: req.body.isAdmin,
+        });
+
+        user = await user.save();
+        if (!user) {
+            return res.status(500).send('The user cannot be created');
+        }
+        res.send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
     }
-  
-    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
-  
-    let user = new User({
-      username: req.body.username,
-      name: req.body.name,
-      surname: req.body.surname,
-      email: req.body.email,
-      passwordHash: bcrypt.hashSync(req.body.password, 10),
-      phone: req.body.phone,
-      membership: req.body.membership,
-      lessons: req.body.lessons,
-      image: fileName ? `${basePath}${fileName}` : null,
-      // zip: req.body.zip,
-      // country: req.body.country,
-      isAdmin: req.body.isAdmin,
-    });
-  
-    user = await user.save();
-    if (!user) {
-      res.status(500).send('The user cannot be created');
-    }
-    res.send(user);
-  });
+});
   
   
 
