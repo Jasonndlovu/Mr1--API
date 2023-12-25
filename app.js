@@ -28,6 +28,8 @@ const notificationsRoutes = require('./routers/notifications');
 const signalRoutes = require('./routers/signal');
 const userRoutes = require('./routers/users');
 const moduleRoutes = require('./routers/module');
+const onlineLessons = require('./routers/onlineLessons');
+const membership = require('./routers/membership');
 
 const api = process.env.API_URL;
 app.use(`${api}/notifications`, notificationsRoutes);
@@ -35,6 +37,8 @@ app.use(`${api}/strategy`, strategyRouters);
 app.use(`${api}/users`, userRoutes);
 app.use(`${api}/module`, moduleRoutes);
 app.use(`${api}/signal`, signalRoutes);
+app.use(`${api}/onlineLessons`, onlineLessons);
+app.use(`${api}/membership`, membership);
 
 
 //dont need this anymore
