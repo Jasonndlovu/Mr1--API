@@ -13,6 +13,8 @@ const authJwt = () => {
      { url: /\/api\/v1\/notifications(.*)/, methods: ['GET', 'OPTIONS', 'POST', 'DELETE'] },
     //  { url: /\/api\/v1\/notifications(.*)/, methods: ['GET', 'OPTIONS'] }, 
      { url: /\/api\/v1\/strategy(.*)/, methods: ['GET', 'OPTIONS','POST', 'PUT', 'DELETE'] },
+     { url: /\/api\/v1\/onlineLessons(.*)/, methods: ['GET', 'OPTIONS','POST', 'PUT', 'DELETE'] },
+     { url: /\/api\/v1\/membership(.*)/, methods: ['GET', 'OPTIONS','POST', 'PUT', 'DELETE'] },
      { url: /\/api\/v1\/module(.*)/, methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'] },
      { url: /\/api\/v1\/signal(.*)/, methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'] },
      { url: /\/api\/v1\/users(.*)/, methods:['GET','OPTIONS','POST', 'PUT']},
