@@ -30,8 +30,10 @@ const userRoutes = require('./routers/users');
 const moduleRoutes = require('./routers/module');
 const onlineLessons = require('./routers/onlineLessons');
 const membership = require('./routers/membership');
+const tradecation = require('./routers/tradecation');
 
 const api = process.env.API_URL;
+app.use(`${api}/tradecation`, tradecation);
 app.use(`${api}/notifications`, notificationsRoutes);
 app.use(`${api}/strategy`, strategyRouters);
 app.use(`${api}/users`, userRoutes);
