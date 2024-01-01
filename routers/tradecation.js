@@ -17,8 +17,9 @@ router.get(`/:id`, async (req, res) =>{
 router.put(`/:id`,async (req, res) =>{
     const tradecation = await Tradecation.findByIdAndUpdate(
         req.params.id,{
-            type: req.body.type,
-            description: req.body.description,
+            location: req.body.location,
+            period: req.body.period,
+            avaibleSlots: req.body.avaibleSlots,
             price: req.body.price,
         },{new : true}
     )
@@ -31,8 +32,9 @@ router.put(`/:id`,async (req, res) =>{
 
 router.post(`/`,async (req, res) =>{
     let tradecation = new Tradecation({
-        type: req.body.type,
-        description: req.body.description,
+        location: req.body.location,
+        period: req.body.period,
+        avaibleSlots: req.body.avaibleSlots,
         price: req.body.price,
     })
     tradecation = await tradecation.save();
